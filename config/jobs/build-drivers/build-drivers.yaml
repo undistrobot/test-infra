@@ -24,6 +24,8 @@ presubmits:
           requests:
             cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
             memory: 6Gi
+      nodeSelector:
+        Archtype: "x86"
   - name: build-drivers-amazonlinux2-presubmit
     decorate: true
     skip_report: false
@@ -48,6 +50,8 @@ presubmits:
           requests:
             cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
             memory: 6Gi
+      nodeSelector:
+        Archtype: "x86"
   - name: build-drivers-centos-presubmit
     decorate: true
     skip_report: false
@@ -72,6 +76,8 @@ presubmits:
           requests:
             cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
             memory: 6Gi
+      nodeSelector:
+        Archtype: "x86"
   - name: build-drivers-debian-presubmit
     decorate: true
     skip_report: false
@@ -96,6 +102,8 @@ presubmits:
           requests:
             cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
             memory: 6Gi
+      nodeSelector:
+        Archtype: "x86"
   - name: build-drivers-ubuntu-aws-presubmit
     decorate: true
     skip_report: false
@@ -120,6 +128,8 @@ presubmits:
           requests:
             cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
             memory: 6Gi
+      nodeSelector:
+        Archtype: "x86"
   - name: build-drivers-ubuntu-generic-presubmit
     decorate: true
     skip_report: false
@@ -144,6 +154,8 @@ presubmits:
           requests:
             cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
             memory: 6Gi
+      nodeSelector:
+        Archtype: "x86"
 periodics:
   - name: build-drivers-amazonlinux-periodic
     decorate: true
@@ -165,6 +177,8 @@ periodics:
         imagePullPolicy: Always
         securityContext:
           privileged: true
+      nodeSelector:
+        Archtype: "x86"
   - name: build-drivers-amazonlinux2-periodic
     decorate: true
     cron: "0 03 * * 2"
@@ -185,6 +199,8 @@ periodics:
         imagePullPolicy: Always
         securityContext:
           privileged: true
+      nodeSelector:
+        Archtype: "x86"
   - name: build-drivers-centos-periodic
     decorate: true
     cron: "0 03 * * 3"
@@ -205,6 +221,8 @@ periodics:
         imagePullPolicy: Always
         securityContext:
           privileged: true
+      nodeSelector:
+        Archtype: "x86"
   - name: build-drivers-debian-periodic
     decorate: true
     cron: "0 03 * * 4"
@@ -225,6 +243,8 @@ periodics:
         imagePullPolicy: Always
         securityContext:
           privileged: true
+      nodeSelector:
+        Archtype: "x86"
   - name: build-drivers-ubuntu-aws-periodic
     decorate: true
     cron: "0 03 * * 5"
@@ -245,6 +265,8 @@ periodics:
         imagePullPolicy: Always
         securityContext:
           privileged: true
+      nodeSelector:
+        Archtype: "x86"
   - name: build-drivers-ubuntu-generic-periodic
     decorate: true
     cron: "0 03 * * 6"
@@ -265,3 +287,5 @@ periodics:
         imagePullPolicy: Always
         securityContext:
           privileged: true
+      nodeSelector:
+        Archtype: "x86"
