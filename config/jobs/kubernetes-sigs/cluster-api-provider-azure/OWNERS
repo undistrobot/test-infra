@@ -1,0 +1,20 @@
+# See the OWNERS docs at https://go.k8s.io/owners
+
+approvers:
+- andyzhangx
+- brendandburns
+- CecileRobertMichon
+- feiskyer
+- devigned
+- justaugustus
+- karataliu
+- khenidak
+- nader-ziada
+reviewers:
+- alexeldeib
+- cpanato
+- juan-lee
+
+labels:
+- sig/cluster-lifecycle
+- area/provider/azure

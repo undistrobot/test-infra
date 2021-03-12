@@ -1,0 +1,77 @@
+periodics:
+# Runs e2e on the cluster built with latest released kops and latest released k/k
+- interval: 1h
+  labels:
+    preset-k8s-ssh: "true"
+  name: e2e-kops-gce-stable
+  decorate: true
+  decoration_config:
+    timeout: 140m
+  spec:
+    serviceAccountName: k8s-kops-test
+    containers:
+    - command:
+      - runner.sh
+      - /workspace/scenarios/kubernetes_e2e.py
+      args:
+      - --cluster=e2e-kops-gce-stable.k8s.local
+      - --deployment=kops
+      - --env=KOPS_DEPLOY_LATEST_URL=https://storage.googleapis.com/kubernetes-release/release/latest.txt
+      - --env=KOPS_KUBE_RELEASE_URL=https://storage.googleapis.com/kubernetes-release/release
+      - --env=KOPS_RUN_TOO_NEW_VERSION=1
+      - --extract=release/latest
+      - --ginkgo-parallel
+      # The logic in https://github.com/kubernetes/test-infra/pull/19031 and https://github.com/kubernetes/test-infra/pull/18870
+      # Creates a state store bucket in the project, let's use the GCP default service account for the nodes
+      # until we have a dedicated node account.
+      # - --kops-args=--gce-service-account=pr-kubekins@kubernetes-jenkins-pull.iam.gserviceaccount.com
+      - --kops-feature-flags=GoogleCloudBucketACL
+      - --kops-priority-path=/workspace/kubernetes/platforms/linux/amd64
+      - --kops-version=https://storage.googleapis.com/kops-ci/bin/latest-ci-updown-green.txt
+      - --kops-zones=us-central1-c
+      - --provider=gce
+      - --timeout=140m
+      - --test_args=--ginkgo.skip=\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]|\[HPA\]|Firewall|Dashboard|Services.*functioning.*NodePort
+      image: gcr.io/k8s-testimages/kubekins-e2e:v20210309-0688fde-master
+  annotations:
+    testgrid-dashboards: sig-cluster-lifecycle-kops, google-kops-gce, kops-gce
+    testgrid-days-of-results: "30"
+    testgrid-tab-name: kops-gce-stable
+
+# Runs e2e on the cluster built with latest released kops and k/k master branch
+- interval: 1h
+  labels:
+    preset-k8s-ssh: "true"
+  name: e2e-kops-gce-latest
+  decorate: true
+  decoration_config:
+    timeout: 140m
+  spec:
+    serviceAccountName: k8s-kops-test
+    containers:
+    - command:
+      - runner.sh
+      - /workspace/scenarios/kubernetes_e2e.py
+      args:
+      - --cluster=e2e-kops-gce-latest.k8s.local
+      - --deployment=kops
+      - --env=KOPS_DEPLOY_LATEST_URL=https://storage.googleapis.com/kubernetes-release-dev/ci/latest.txt
+      - --env=KOPS_KUBE_RELEASE_URL=https://storage.googleapis.com/kubernetes-release/release
+      - --env=KOPS_RUN_TOO_NEW_VERSION=1
+      - --extract=ci/latest
+      - --ginkgo-parallel
+      # Temporarily use default service account: https://github.com/kubernetes/test-infra/issues/17558
+      #- --kops-args=--gce-service-account=pr-kubekins@kubernetes-jenkins-pull.iam.gserviceaccount.com
+      - --kops-feature-flags=GoogleCloudBucketACL
+      - --kops-priority-path=/workspace/kubernetes/platforms/linux/amd64
+      - --kops-version=https://storage.googleapis.com/kops-ci/bin/latest-ci-updown-green.txt
+      - --kops-zones=us-central1-c
+      - --provider=gce
+      - --timeout=140m
+      - --test_args=--ginkgo.skip=\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]|\[HPA\]|Firewall|Dashboard|Services.*functioning.*NodePort
+      image: gcr.io/k8s-testimages/kubekins-e2e:latest-experimental
+      imagePullPolicy: Always
+  annotations:
+    testgrid-dashboards: sig-cluster-lifecycle-kops, google-kops-gce, kops-gce
+    testgrid-days-of-results: "30"
+    testgrid-tab-name: kops-gce-latest

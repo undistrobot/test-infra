@@ -1,0 +1,20 @@
+# See the OWNERS docs at https://go.k8s.io/owners
+
+reviewers:
+- davidewatson
+- detiber
+- justinsb
+- luxas
+- timothysc
+- vincepri
+approvers:
+- davidewatson
+- detiber
+- justinsb
+- luxas
+- timothysc
+- vincepri
+emeritus_reviewers:
+  - ncdc
+emeritus_approvers:
+  - ncdc
